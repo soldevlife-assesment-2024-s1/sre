@@ -3,7 +3,7 @@ import http from 'k6/http';
 
 export const options = {
   // A number specifying the number of VUs to run concurrently.
-  vus: 10000,
+  vus: 20,
   // A string specifying the total duration of the test run.
   duration: '60s',
 
@@ -66,7 +66,7 @@ export const options = {
 // See https://grafana.com/docs/k6/latest/examples/get-started-with-k6/ to learn more
 // about authoring k6 scripts.
 //
-export default function() {
+export default function () {
   let payload = JSON.stringify({
     ticket_detail_id: 3,
     full_name: 'Alex Smith',
@@ -78,11 +78,16 @@ export default function() {
   let params = {
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InphaW5AZ2FtYWlsLmNvbSIsImV4cCI6MTcxNzY4NzU2OCwiaWQiOjF9.3v64uvbNqG7Bz2tl0EYRhXo63IO4CzP0yEIMDtVTMcc',
+      Accept: 'application/json',
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InphaW5AZ2FtYWlsLmNvbSIsImV4cCI6MTcxODA4MDAwNywiaWQiOjF9.B9jfAtYD7zq2i5WFFjo7kvI4nsRdWriNvsqBkf_RJFY',
     },
   };
-  let resp = http.post('http://a7b52563210a449fc9ab178f0edc7dd0-968752565.ap-southeast-1.elb.amazonaws.com/booking/api/v1/book', payload, params);
+  let resp = http.post(
+    'http://ab9f9f4f5d5b2426399851ee7e29c7e2-838532969.ap-southeast-1.elb.amazonaws.com/booking/api/v1/book',
+    payload,
+    params
+  );
   console.log('Response time was ' + String(resp.timings.duration) + ' ms');
   console.log('Response status was ' + String(resp.status));
   console.log('Response body was ' + String(resp.body));
